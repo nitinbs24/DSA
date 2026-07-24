@@ -14,11 +14,17 @@ int binarySearch(vector<int>& nums, int x){
         }
         else low=mid+1;
     }
-    return ans;
+    if (ans<nums.size() && nums[ans]==x) return ans;
+    else{
+        nums.insert(nums.begin()+ans,x);
+        return ans;
+    }
 }
 int main(){
     vector<int> nums {3,5,8,15,19};
-    int x=7;
+    int x=8;
 
     cout<<binarySearch(nums,x)<<endl;
+
+    for(auto num:nums) cout<<num<<" ";
 }

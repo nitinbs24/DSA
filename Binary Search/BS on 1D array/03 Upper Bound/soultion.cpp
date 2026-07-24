@@ -17,8 +17,8 @@ int binarySearch(vector<int>& nums, int x){
     return ans;
 }
 int main(){
-    vector<int> nums {3,5,8,8,15,19};
-    int x=9;
+    vector<int> nums {3,5,8,15,19};
+    int x=7;
 
-    cout<<binarySearch(nums,9)<<endl;
+    cout<<binarySearch(nums,x)<<endl;
 }
