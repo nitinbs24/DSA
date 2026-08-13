@@ -12,8 +12,7 @@ int prec(char c){
 void infixToPostfix(string exp){
     string result="";
     stack<char> st;
-    for(int i=0;i<exp.size();i++){
-        char c=exp[i];
+    for(char c:exp){
         if((c>='a' && c<='z') || (c>='A' && c<='Z') || (c>='0' && c<='9')) result+=c;
         else if (c=='(') st.push(c);
         else if(c==')'){
