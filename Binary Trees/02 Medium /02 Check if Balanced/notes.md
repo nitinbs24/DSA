@@ -11,7 +11,7 @@ Given a binary tree, determine if it is **height-balanced**. A height-balanced b
 
 ## Approach
 
-### Approach 1: Top-Down Recursion (Brute Force - Implemented)
+### Approach 1: Top-Down Recursion (Brute Force - `solution.cpp`)
 For every node in the binary tree:
 1. Calculate the height of the left subtree (`leftHeight = getHeight(root->left)`).
 2. Calculate the height of the right subtree (`rightHeight = getHeight(root->right)`).
@@ -22,7 +22,7 @@ For every node in the binary tree:
 
 ---
 
-### Approach 2: Bottom-Up Postorder (Optimal - O(N))
+### Approach 2: Bottom-Up Postorder (Optimal - `solution2.cpp`)
 Instead of calculating height repeatedly from the top down, compute the height **bottom-up**:
 1. At each node, compute the height of the left and right subtrees.
 2. If any subtree is unbalanced (returns `-1`), propagate `-1` immediately upwards.
@@ -34,7 +34,7 @@ Instead of calculating height repeatedly from the top down, compute the height *
 
 ## Code
 
-### Approach 1: Top-Down (Code from `solution.cpp`)
+### Approach 1: Top-Down Brute Force (Code from `solution.cpp`)
 ```cpp
 #include <bits/stdc++.h>
 using namespace std;
@@ -117,28 +117,62 @@ int main() {
 }
 ```
 
-### Approach 2: Optimal Bottom-Up O(N)
+### Approach 2: Optimal Bottom-Up O(N) (Code from `solution2.cpp`)
 ```cpp
-class SolutionOptimal {
+#include <bits/stdc++.h>
+using namespace std;
+
+struct Node {
+    int data;
+    Node* left;
+    Node* right;
+
+    Node(int val) : data(val), left(nullptr), right(nullptr) {}
+};
+
+class Solution {
 public:
-    int checkHeight(Node* root) {
-        if (root == nullptr) return 0;
-
-        int leftHeight = checkHeight(root->left);
-        if (leftHeight == -1) return -1; // Left subtree is unbalanced
-
-        int rightHeight = checkHeight(root->right);
-        if (rightHeight == -1) return -1; // Right subtree is unbalanced
-
-        if (abs(leftHeight - rightHeight) > 1) return -1; // Current node is unbalanced
-
-        return 1 + max(leftHeight, rightHeight);
+    bool isBalanced(Node* root) {
+        return dfsHeight(root) != -1;
     }
 
-    bool isBalanced(Node* root) {
-        return checkHeight(root) != -1;
+    int dfsHeight(Node* root) {
+        if (root == NULL) return 0;
+
+        int leftHeight = dfsHeight(root->left);
+        if (leftHeight == -1) 
+            return -1;
+
+        int rightHeight = dfsHeight(root->right);
+        if (rightHeight == -1) 
+            return -1;
+
+        if (abs(leftHeight - rightHeight) > 1)  
+            return -1;
+
+        return max(leftHeight, rightHeight) + 1;
     }
 };
+
+int main() {
+    Node* root = new Node(1);
+    root->left = new Node(2);
+    root->right = new Node(3);
+    root->left->left = new Node(4);
+    root->left->right = new Node(5);
+    root->left->right->right = new Node(6);
+    root->left->right->right->right = new Node(7);
+
+    Solution solution;
+
+    if (solution.isBalanced(root)) {
+        cout << "The tree is balanced." << endl;
+    } else {
+        cout << "The tree is not balanced." << endl;
+    }
+
+    return 0;
+}
 ```
 
 ---
